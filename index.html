@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Player Accounts & Hub</title>
+<style>
+:root{
+  --bg:#06080d; --panel:#0b0e15; --panel2:#0e121a; --line:#18202b;
+  --text:#e8edf5; --muted:#727d8d; --cyan:#12d7ff; --green:#16e6a1;
+  --purple:#b77cff; --yellow:#ffd33d; --red:#ff5576; --blue:#3e8cff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 70% 0%,#101925 0,#06080d 35%,#04060a 100%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:64px;background:#070a10;border-right:1px solid #121923;display:flex;flex-direction:column;align-items:center;padding:18px 0;gap:13px;position:fixed;left:0;top:0;bottom:0;z-index:10}
+.logo{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#0b1c2c,#123c55);display:grid;place-items:center;color:#1bd9ff;font-weight:900;font-size:14px;border:1px solid #163d4c}
+.nav{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:#637083;border:1px solid transparent}
+.nav.active,.nav:hover{background:#0c1822;color:#19d9ff;border-color:#133544}
+.main{margin-left:64px;width:calc(100% - 64px);padding:24px 22px 45px;max-width:1500px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.eyebrow{font-size:10px;letter-spacing:1.4px;color:#dfe6ef;font-weight:800}
+.brandline{display:flex;gap:8px;align-items:center;margin-top:12px}
+.badge{font-size:9px;letter-spacing:.8px;color:#12d7ff;background:#06202b;border:1px solid #0a3a4c;border-radius:4px;padding:4px 7px}
+.place{font-size:9px;color:#4f5967}
+.top-actions{display:flex;gap:8px}
+.btn{border:1px solid #173041;background:#08141d;color:#9beaff;border-radius:8px;padding:9px 12px;font-size:10px;font-weight:800}
+.btn:hover{background:#0d202d}
+.btn.primary{background:#08a9d0;color:white;border-color:#0bc3ed}
+.btn.danger{color:#ff8ba0;border-color:#45202a;background:#170b10}
+.btn.ghost{color:#aeb8c7;background:#0b0e14}
+h1{font-size:20px;margin:6px 0 0;letter-spacing:.1px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:13px}
+.card{background:linear-gradient(145deg,#0b0f16,#090c12);border:1px solid #151c26;border-radius:16px;padding:17px 18px;min-height:103px;box-shadow:0 10px 30px #0003}
+.card.accent{border-color:#173545}
+.card-label{font-size:9px;color:#4bdbba;letter-spacing:1px;font-weight:900}
+.card-label.cyan{color:#54e5ff}.card-label.purple{color:#bc83ff}.card-label.yellow{color:#ffd54c}
+.card-value{font-size:23px;font-weight:900;margin-top:10px;letter-spacing:.2px}
+.card-value.green{color:#12e5a1}.card-value.cyan{color:#5ee9ff}.card-value.purple{color:#bf7fff}.card-value.yellow{color:#ffd13d}
+.card-sub{font-size:8px;color:#566170;margin-top:5px;text-transform:uppercase;letter-spacing:.6px}
+.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0 14px}
+.filter{display:flex;border:1px solid #17212d;background:#090c12;border-radius:9px;overflow:hidden}
+.filter button{border:0;background:transparent;color:#647083;padding:8px 13px;font-size:9px;font-weight:900}
+.filter button.active{background:#0cb8df;color:#00131a}
+.sort,.search{height:34px;border:1px solid #18232f;background:#090d14;color:#9da8b7;border-radius:9px;padding:0 11px;font-size:10px}
+.search{margin-left:auto;width:220px}
+.toggle{display:flex;align-items:center;gap:7px;color:#778394;font-size:9px}
+.toggle input{accent-color:#0bc5eb}
+.table{background:#080b11;border:1px solid #151c26;border-radius:16px;overflow:hidden}
+.thead,.row{display:grid;grid-template-columns:minmax(160px,2fr) 1fr 1.15fr 1fr .8fr .7fr .7fr .55fr;align-items:center}
+.thead{padding:12px 13px;color:#566170;font-size:8px;text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid #141b24}
+.row{padding:13px;border-bottom:1px solid #111720;min-height:66px}
+.row:last-child{border-bottom:0}
+.account{display:flex;align-items:center;gap:10px;min-width:0}
+.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#18374c,#08202a);border:1px solid #16435a;display:grid;place-items:center;font-size:14px}
+.name{font-size:10px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.masked{letter-spacing:2px}
+.meta{font-size:7px;color:#566170;margin-top:3px}
+.val{font-size:10px;font-weight:800}
+.money{color:#14e3a2}.income{color:#62e7ff}.speed{color:#be80ff}.pets{color:#11cdd0}.stolen{color:#ffd13d}
+.status{font-size:7px;font-weight:900;padding:4px 6px;border-radius:5px;display:inline-block;text-transform:uppercase}
+.ready{color:#25e8a7;background:#09241c;border:1px solid #124b3b}
+.sold{color:#ff7893;background:#2b0d16;border:1px solid #57202f}
+.action{background:transparent;border:0;color:#687384;font-size:14px}
+.bottom{display:flex;justify-content:center;align-items:center;gap:8px;color:#667181;font-size:9px;padding:16px}
+.bottom button{border:1px solid #17202b;background:#090d13;color:#8792a1;border-radius:8px;padding:7px 10px;font-size:9px}
+.modal-bg{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:18px;z-index:30}
+.modal-bg.show{display:flex}
+.modal{width:min(620px,100%);max-height:92vh;overflow:auto;background:#0a0e15;border:1px solid #1b2937;border-radius:18px;padding:20px;box-shadow:0 30px 80px #000}
+.modal h2{font-size:16px;margin:0 0 15px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field.full{grid-column:1/-1}
+.field label{font-size:9px;color:#718092;font-weight:800;text-transform:uppercase;letter-spacing:.7px}
+.field input,.field select{width:100%;height:38px;background:#070b11;border:1px solid #192431;border-radius:8px;color:#e4eaf2;padding:0 10px;outline:none}
+.field input:focus,.field select:focus{border-color:#0e8baa}
+.inline{display:grid;grid-template-columns:1fr 105px;gap:7px}
+.checkline{display:flex;align-items:center;gap:8px;margin-top:7px;color:#8b96a5;font-size:10px}
+.checkline input{accent-color:#0cc8ee}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:17px}
+.notice{font-size:9px;color:#697585;background:#080c12;border:1px solid #151e29;border-radius:9px;padding:10px;margin-bottom:12px;line-height:1.5}
+.secret-row{display:flex;gap:7px}.secret-row input{flex:1}.mini{width:42px;padding:0;border:1px solid #192431;background:#080c12;color:#8c98a8;border-radius:8px}
+.rate-panel{position:fixed;right:18px;bottom:18px;z-index:20;background:#0b1017;border:1px solid #1b2a37;border-radius:12px;padding:10px 12px;box-shadow:0 15px 40px #0008}
+.rate-panel.hidden-rate .rate-content{display:none}
+.rate-head{display:flex;align-items:center;gap:8px;color:#7c8898;font-size:9px;font-weight:900}
+.rate-content{display:flex;align-items:center;gap:7px;margin-top:7px}
+.rate-content input{width:95px;height:31px;background:#06090e;border:1px solid #1b2b38;border-radius:7px;color:#eaf7ff;padding:0 8px}
+.small{font-size:8px;color:#596575}
+.empty{padding:30px;text-align:center;color:#5c6878;font-size:10px}
+@media(max-width:900px){
+ .cards{grid-template-columns:repeat(2,1fr)}
+ .thead{display:none}
+ .row{grid-template-columns:1fr 1fr;gap:9px}
+ .row>.cell:nth-child(n+3){display:block}
+ .search{margin-left:0;width:180px}
+}
+@media(max-width:600px){
+ .sidebar{width:48px}.main{margin-left:48px;width:calc(100% - 48px);padding:16px 10px 35px}
+ .cards{grid-template-columns:1fr 1fr;gap:7px}.card{padding:13px;min-height:90px}.card-value{font-size:18px}
+ h1{font-size:16px}.topbar{margin-bottom:16px}
+ .formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}
+ .row{grid-template-columns:1.3fr 1fr}.row>.cell:nth-child(n+3){display:none}
+ .search{width:100%}.controls{gap:6px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo">SA</div>
+    <div class="nav active">⌂</div><div class="nav">♟</div><div class="nav">▥</div>
+    <div class="nav">◉</div><div class="nav">▣</div><div class="nav">♜</div><div class="nav">♢</div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <div class="eyebrow">CONTROL DASHBOARD</div>
+        <div class="brandline"><span class="badge">STEAL AN EGG TRACKER</span><span class="place">Manual Seller Calculator</span></div>
+        <h1>PLAYER ACCOUNTS & EGG/PET HUB</h1>
+      </div>
+      <div class="top-actions">
+        <button class="btn" onclick="openModal()">＋ ADD ACCOUNT</button>
+        <button class="btn" onclick="exportData()">↗ EXPORT</button>
+        <button class="btn danger" onclick="clearAll()">RESET</button>
+      </div>
+    </div>
+
+    <section class="cards">
+      <div class="card"><div class="card-label">🟢 ACTIVE / READY ACCOUNTS</div><div id="readyCount" class="card-value">0</div><div id="readySub" class="card-sub">ready for sale</div></div>
+      <div class="card"><div class="card-label cyan">💸 TOTAL MONEY</div><div id="moneyTotal" class="card-value green">$0</div><div class="card-sub">combined account balance</div></div>
+      <div class="card accent"><div class="card-label cyan">⚡ TOTAL ESTIMATED PRICE</div><div id="priceTotal" class="card-value cyan">Rp0</div><div id="priceFormula" class="card-sub">income + speed × rate</div></div>
+      <div class="card"><div class="card-label purple">🚀 TOTAL SPEED</div><div id="speedTotal" class="card-value purple">0</div><div class="card-sub">leading numbers only</div></div>
+      <div class="card"><div class="card-label cyan">📈 TOTAL INCOME / SEC</div><div id="incomeTotal" class="card-value cyan">0</div><div class="card-sub">leading numbers only</div></div>
+      <div class="card"><div class="card-label yellow">🛒 SOLD ACCOUNTS</div><div id="soldCount" class="card-value yellow">0</div><div class="card-sub">marked as sold</div></div>
+    </section>
+
+    <div class="controls">
+      <div class="filter">
+        <button class="active" data-filter="all" onclick="setFilter('all',this)">ALL</button>
+        <button data-filter="ready" onclick="setFilter('ready',this)">READY</button>
+        <button data-filter="sold" onclick="setFilter('sold',this)">SOLD</button>
+      </div>
+      <select class="sort" id="sort" onchange="render()">
+        <option value="default">⚡ Default Sort</option>
+        <option value="income">Income ↓</option><option value="speed">Speed ↓</option>
+        <option value="price">Price ↓</option><option value="name">Name A-Z</option>
+      </select>
+      <label class="toggle"><input type="checkbox" id="hideNames" onchange="render()"> 🙈 Hide All Names</label>
+      <label class="toggle"><input type="checkbox" id="hidePasswords" onchange="render()"> 🔒 Hide Passwords</label>
+      <input class="search" id="search" oninput="render()" placeholder="🔎 Search account...">
+    </div>
+
+    <div class="table">
+      <div class="thead">
+        <div>ACCOUNT</div><div>💸 MONEY</div><div>⚡ INCOME / SEC</div><div>🚀 SPEED</div><div>🐾 PETS</div><div>🥚 SOLD</div><div>STATUS</div><div></div>
+      </div>
+      <div id="rows"></div>
+      <div class="bottom"><button onclick="changePage(-1)">Prev</button><span id="pageInfo">Page 1</span><button onclick="changePage(1)">Next</button></div>
+    </div>
+  </main>
+</div>
+
+<div class="rate-panel hidden-rate" id="ratePanel">
+  <div class="rate-head">🔐 SELLING RATE <button class="btn ghost" style="padding:4px 7px" onclick="toggleRate()">SHOW / HIDE</button></div>
+  <div class="rate-content">
+    <input id="rate" type="number" min="0" step="any" value="1000" oninput="saveAndRender()">
+    <span class="small">Rp per 1 point</span>
+  </div>
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h2>＋ Tambah Akun</h2>
+    <div class="notice">
+      Semua angka income/speed boleh dikosongkan. Jika hanya income ATAU speed yang diisi, akun tetap bisa dihitung.
+      Unit <b>M</b> dan <b>B</b> hanya label game; kalkulator mengambil <b>angka depannya saja</b>.
+    </div>
+    <div class="formgrid">
+      <div class="field full"><label>Nama Akun</label><input id="fName" placeholder="contoh: xilumatiy20"></div>
+      <div class="field full"><label>Password Akun (opsional)</label><div class="secret-row"><input id="fPass" type="password" placeholder="Password"><button class="mini" onclick="toggleInput('fPass',this)">👁</button></div></div>
+      <div class="field"><label>Money</label><input id="fMoney" placeholder="contoh: 84.44T"></div>
+      <div class="field"><label>Status</label><select id="fStatus"><option value="ready">READY</option><option value="sold">SOLD</option></select></div>
+      <div class="field"><label>Income / Sec</label><div class="inline"><input id="fIncome" type="number" min="0" step="any" placeholder="contoh: 15"><select id="fIncomeUnit"><option value="B/s">B/s</option><option value="M/s">M/s</option></select></div></div>
+      <div class="field"><label>Speed</label><div class="inline"><input id="fSpeed" type="number" min="0" step="any" placeholder="contoh: 45"><select id="fSpeedUnit"><option value="B">B</option><option value="M">M</option></select></div></div>
+      <div class="field"><label>Pets</label><input id="fPets" type="number" min="0" step="1" placeholder="0"></div>
+      <div class="field"><label>Eggs / Stolen</label><input id="fStolen" type="number" min="0" step="1" placeholder="0"></div>
+      <div class="field full"><label>Catatan</label><input id="fNote" placeholder="opsional"></div>
+    </div>
+    <div class="checkline"><input id="fInclude" type="checkbox" checked> Masukkan akun ini ke perhitungan harga</div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">BATAL</button><button class="btn primary" onclick="addAccount()">SIMPAN AKUN</button></div>
+  </div>
+</div>
+
+<script>
+const KEY='sae_seller_dashboard_v1';
+let data=JSON.parse(localStorage.getItem(KEY)||'null') || {accounts:[],rate:1000};
+let filter='all', page=1, pageSize=12;
+
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function num(v){const n=parseFloat(v);return Number.isFinite(n)?n:0}
+function money(v){return v===''?'—':v}
+function formatNum(v){return Number(v||0).toLocaleString('id-ID',{maximumFractionDigits:2})}
+function priceOf(a){return (num(a.income)+num(a.speed))*num(data.rate)}
+function toggleRate(){document.getElementById('ratePanel').classList.toggle('hidden-rate')}
+function toggleInput(id,btn){const x=document.getElementById(id);x.type=x.type==='password'?'text':'password';btn.textContent=x.type==='password'?'👁':'🙈'}
+function openModal(){document.getElementById('modalBg').classList.add('show');document.getElementById('fName').focus()}
+function closeModal(){document.getElementById('modalBg').classList.remove('show')}
+function addAccount(){
+  const name=document.getElementById('fName').value.trim();
+  if(!name){alert('Nama akun boleh diisi agar mudah dikenali.');return}
+  const a={
+    id:Date.now(),name,password:document.getElementById('fPass').value,
+    money:document.getElementById('fMoney').value.trim(),
+    income:document.getElementById('fIncome').value,
+    incomeUnit:document.getElementById('fIncomeUnit').value,
+    speed:document.getElementById('fSpeed').value,
+    speedUnit:document.getElementById('fSpeedUnit').value,
+    pets:document.getElementById('fPets').value,stolen:document.getElementById('fStolen').value,
+    note:document.getElementById('fNote').value.trim(),
+    status:document.getElementById('fStatus').value,
+    include:document.getElementById('fInclude').checked
+  };
+  data.accounts.push(a);save();closeModal();document.querySelectorAll('.modal input').forEach(x=>{if(x.type!=='checkbox')x.value=''});render();
+}
+function delAccount(id){if(confirm('Hapus akun ini?')){data.accounts=data.accounts.filter(a=>a.id!==id);save();render()}}
+function toggleInclude(id){const a=data.accounts.find(x=>x.id===id);if(a){a.include=!a.include;save();render()}}
+function toggleStatus(id){const a=data.accounts.find(x=>x.id===id);if(a){a.status=a.status==='sold'?'ready':'sold';save();render()}}
+function setFilter(f,b){filter=f;page=1;document.querySelectorAll('.filter button').forEach(x=>x.classList.remove('active'));b.classList.add('active');render()}
+function changePage(d){page=Math.max(1,page+d);render()}
+function saveAndRender(){data.rate=num(document.getElementById('rate').value);save();render()}
+function filtered(){
+  let q=document.getElementById('search').value.toLowerCase().trim();
+  let arr=data.accounts.filter(a=>(filter==='all'||a.status===filter)&&(!q||a.name.toLowerCase().includes(q)));
+  const s=document.getElementById('sort').value;
+  if(s==='income')arr.sort((a,b)=>num(b.income)-num(a.income));
+  if(s==='speed')arr.sort((a,b)=>num(b.speed)-num(a.speed));
+  if(s==='price')arr.sort((a,b)=>priceOf(b)-priceOf(a));
+  if(s==='name')arr.sort((a,b)=>a.name.localeCompare(b.name));
+  return arr;
+}
+function render(){
+  data.rate=num(document.getElementById('rate').value||data.rate);save();
+  const calc=data.accounts.filter(a=>a.include);
+  const income=calc.reduce((s,a)=>s+num(a.income),0);
+  const speed=calc.reduce((s,a)=>s+num(a.speed),0);
+  const totalPrice=(income+speed)*data.rate;
+  const ready=data.accounts.filter(a=>a.status==='ready').length,sold=data.accounts.filter(a=>a.status==='sold').length;
+  document.getElementById('readyCount').textContent=ready;
+  document.getElementById('readySub').textContent=`${data.accounts.length} total accounts`;
+  document.getElementById('soldCount').textContent=sold;
+  document.getElementById('moneyTotal').textContent='$'+data.accounts.reduce((s,a)=>s+parseMoneyNumber(a.money),0).toLocaleString('id-ID',{maximumFractionDigits:2});
+  document.getElementById('incomeTotal').textContent=formatNum(income)+' pts';
+  document.getElementById('speedTotal').textContent=formatNum(speed)+' pts';
+  document.getElementById('priceTotal').textContent='Rp'+formatRp(totalPrice);
+  document.getElementById('priceFormula').textContent=`(${formatNum(income)} + ${formatNum(speed)}) × Rp${formatRp(data.rate)}`;
+  const arr=filtered(), pages=Math.max(1,Math.ceil(arr.length/pageSize));if(page>pages)page=pages;
+  const slice=arr.slice((page-1)*pageSize,page*pageSize);
+  const hideNames=document.getElementById('hideNames').checked, hidePass=document.getElementById('hidePasswords').checked;
+  document.getElementById('rows').innerHTML=slice.length?slice.map(a=>{
+    const inc=a.income!==''?formatNum(num(a.income))+' '+a.incomeUnit:'—';
+    const sp=a.speed!==''?formatNum(num(a.speed))+' '+a.speedUnit:'—';
+    return `<div class="row">
+      <div class="cell"><div class="account"><div class="avatar">👤</div><div style="min-width:0"><div class="name ${hideNames?'masked':''}">${hideNames?'••••••••':esc(a.name)}</div><div class="meta">${hidePass?'🔒 password hidden':(a.password?'🔑 '+esc(a.password):'no password')} ${a.note?' · '+esc(a.note):''}</div></div></div></div>
+      <div class="cell val money">${money(esc(a.money))}</div>
+      <div class="cell val income">${inc}</div>
+      <div class="cell val speed">${sp}</div>
+      <div class="cell val pets">🐾 ${num(a.pets)}</div>
+      <div class="cell val stolen">🥚 ${num(a.stolen)}</div>
+      <div class="cell"><span class="status ${a.status}">${a.status==='sold'?'SOLD':'READY'}</span></div>
+      <div class="cell"><button class="action" title="${a.include?'Ikut hitung':'Tidak dihitung'}" onclick="toggleInclude(${a.id})">${a.include?'☑':'☐'}</button><button class="action" onclick="toggleStatus(${a.id})">↔</button><button class="action" onclick="delAccount(${a.id})">🗑</button></div>
+    </div>`;
+  }).join(''):`<div class="empty">Belum ada akun. Tekan ＋ ADD ACCOUNT untuk mulai.</div>`;
+  document.getElementById('pageInfo').textContent=`Page ${page} of ${pages}`;
+}
+function parseMoneyNumber(v){
+  if(!v)return 0;
+  const m=String(v).replace(/,/g,'.').match(/[\d.]+/);return m?num(m[0]):0;
+}
+function formatRp(v){return Number(v||0).toLocaleString('id-ID',{maximumFractionDigits:0})}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function exportData(){
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='sae-seller-data.json';a.click();URL.revokeObjectURL(a.href);
+}
+function clearAll(){if(confirm('Hapus semua akun dan reset dashboard?')){data={accounts:[],rate:1000};save();render()}}
+document.getElementById('rate').value=data.rate;
+render();
+</script>
+</body>
+</html>
