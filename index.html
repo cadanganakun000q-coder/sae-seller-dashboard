@@ -182,18 +182,6 @@ h1{font-size:20px;margin:6px 0 0;letter-spacing:.1px}
   <div class="rate-note">Rate income dan speed terpisah. Sembunyikan panel sebelum screenshot marketplace.</div>
 </div>
 
-
-<div class="modal-bg" id="aiBg"><div class="modal">
-<h2>✨ AI IMPORT DATA</h2>
-<div class="notice">Paste data akun mentah di bawah. AI akan mencoba mengenali nama akun, money, income/sec, speed, pets, stolen/egg, status, dan satuan M/B. <b>Password tidak dikirim ke AI</b>; jika terdeteksi, password dipisahkan di browser dan kamu bisa mengisinya saat review.</div>
-<div class="field"><label>DATA MENTAH</label><textarea id="aiInput" style="width:100%;min-height:210px;resize:vertical;background:#070b11;border:1px solid #1b2834;border-radius:8px;color:#e7edf5;padding:12px;font:12px/1.5 Inter,Segoe UI,Arial" placeholder="Contoh:
-xilumatiy20 - 5,4 B money/s
-silumatiy50 - 6,2 B money/s
-xilumatiy15 - 8 B/s, speed 35b"></textarea></div>
-<div class="field" style="margin-top:12px"><label>HASIL AI / REVIEW</label><textarea id="aiOutput" readonly style="width:100%;min-height:170px;resize:vertical;background:#05080d;border:1px solid #1b2834;border-radius:8px;color:#bfefff;padding:12px;font:11px/1.5 ui-monospace,Consolas,monospace" placeholder="Hasil analisis akan muncul di sini..."></textarea></div>
-<div class="modal-actions"><button class="btn ghost" onclick="closeAI()">BATAL</button><button class="btn" onclick="analyzeAI()">🤖 ANALYZE</button><button class="btn primary" onclick="applyAI()">✓ ADD TO DASHBOARD</button></div>
-</div></div>
-
 <div class="modal-bg" id="modalBg">
   <div class="modal">
     <h2 id="modalTitle">＋ Tambah Akun</h2>
@@ -304,48 +292,63 @@ function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileRe
 function clearAll(){if(confirm('Hapus semua akun dan reset dashboard?')){data={accounts:[],incomeRate:1000,speedRate:1000};save();render()}}
 $('incomeRate').value=data.incomeRate;$('speedRate').value=data.speedRate;render();
 
-let aiDraft=[];
-const AI_ENDPOINT_KEY='sae_ai_endpoint';
-function openAI(){ $('aiBg').classList.add('show'); $('aiOutput').value=''; aiDraft=[]; }
-function closeAI(){ $('aiBg').classList.remove('show'); }
-function extractJSON(s){
-  try{return JSON.parse(s)}catch{}
-  const m=s.match(/\[[\s\S]*\]/); if(m){try{return JSON.parse(m[0])}catch{}}
-  const o=s.match(/\{[\s\S]*\}/); if(o){try{return JSON.parse(o[0])}catch{}}
-  return null
+let aiResults=[];
+function openAI(){ $('aiBg').classList.add('show'); $('aiInput').focus(); $('aiPreview').style.display='none'; $('aiStatus').style.display='none'; $('aiAddBtn').style.display='none'; aiResults=[] }
+function closeAI(){ $('aiBg').classList.remove('show') }
+function aiStatus(t){$('aiStatus').style.display='block';$('aiStatus').innerHTML=t}
+function parseAI(){
+ const raw=$('aiInput').value.trim();
+ if(!raw){aiStatus('⚠️ Paste data terlebih dahulu.');return}
+ /*
+  Local-first parser: this makes the feature work immediately without an API.
+  It recognizes common formats and can be replaced with the secure Worker later.
+ */
+ const lines=raw.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+ const out=[];
+ let current=null;
+ const flush=()=>{if(current&&current.name)out.push(current);current=null}
+ for(const line of lines){
+   // Ignore obvious group/category headers.
+   if(/^(kelompok|group)\s+\d+\s*b?$/i.test(line)||/^\d+\s*b$/i.test(line))continue;
+   const nameMatch=line.match(/(?:^|\s)([A-Za-z0-9_]{3,})/);
+   const incomeMatch=line.match(/(\d+(?:[.,]\d+)?)\s*(B|M)\s*(?:\/s|money\/s)/i);
+   const speedMatch=line.match(/(?:speed\s*[:=]?\s*)(\d+(?:[.,]\d+)?)\s*(B|M)?/i);
+   const speedAlt=line.match(/(?:^|[,\s(])speed\s*(\d+(?:[.,]\d+)?)\s*(B|M)?/i);
+   const moneyMatch=line.match(/(?:money|cash|balance)\s*[:=]?\s*\$?\s*([\d.,]+(?:\s*[KMBT])?)/i);
+   const petsMatch=line.match(/pets?\s*[:=]?\s*(\d+)/i);
+   const stolenMatch=line.match(/(?:stolen|egg|eggs?)\s*[:=]?\s*(\d+)/i);
+   if(!nameMatch)continue;
+   // If a line looks like a new account, start it. Multiple account-like lines become multiple rows.
+   if(current)flush();
+   current={
+     name:nameMatch[1],
+     password:'',
+     money:moneyMatch?moneyMatch[1]:'',
+     income:incomeMatch?incomeMatch[1].replace(',','.'): '',
+     incomeUnit:incomeMatch?(incomeMatch[2].toUpperCase()+'/s'):'B/s',
+     speed:(speedMatch||speedAlt)?(speedMatch||speedAlt)[1].replace(',','.'):'',
+     speedUnit:(speedMatch||speedAlt)&&((speedMatch||speedAlt)[2])?(speedMatch||speedAlt)[2].toUpperCase():'B',
+     pets:petsMatch?petsMatch[1]:'',
+     stolen:stolenMatch?stolenMatch[1]:'',
+     note:'',
+     status:'ready',
+     include:true
+   };
+ }
+ flush();
+ aiResults=out;
+ if(!out.length){aiStatus('❌ Belum berhasil mengenali akun. Coba gunakan satu akun per baris atau contoh format: <b>nama - 5,4 B money/s, speed 35b</b>');return}
+ aiStatus(`✅ Terbaca <b>${out.length} akun</b>. Periksa hasilnya sebelum memasukkan ke dashboard.`);
+ $('aiPreview').style.display='block';
+ $('aiPreview').innerHTML=`<div class="table"><div class="thead" style="grid-template-columns:2fr 1fr 1fr 1fr .7fr"><div>ACCOUNT</div><div>INCOME</div><div>SPEED</div><div>MONEY</div><div>ADD</div></div>`+
+ out.map((a,i)=>`<div class="row" style="grid-template-columns:2fr 1fr 1fr 1fr .7fr"><div class="name">${esc(a.name)}</div><div class="val income">${a.income?esc(a.income+' '+a.incomeUnit):'—'}</div><div class="val speed">${a.speed?esc(a.speed+' '+a.speedUnit):'—'}</div><div class="val money">${esc(a.money||'—')}</div><div><input class="include" type="checkbox" id="air${i}" checked></div></div>`).join('')+`</div>`;
+ $('aiAddBtn').style.display='inline-block';
 }
-function scrubPasswords(raw){
-  return raw.split('\n').map(line=>line.replace(/(?:password|pass|pw)\s*[:=]\s*\S+/ig,'[PASSWORD REMOVED]')).join('\n')
+function addAIResults(){
+ const selected=aiResults.filter((_,i)=>$('air'+i)?.checked);
+ selected.forEach(a=>data.accounts.push({...a,id:Date.now()+Math.random()}));
+ save();render();closeAI();toast(`✨ ${selected.length} akun berhasil ditambahkan`);
 }
-async function analyzeAI(){
- const raw=$('aiInput').value.trim(); if(!raw){alert('Paste data terlebih dahulu.');return}
- const endpoint=localStorage.getItem(AI_ENDPOINT_KEY)||'';
- if(!endpoint){alert('AI belum terhubung. Setelah Worker dibuat, masukkan URL Worker di menu AI Settings.');return}
- $('aiOutput').value='⏳ AI sedang membaca data...';
- try{
-   const safe=scrubPasswords(raw);
-   const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:safe})});
-   if(!r.ok)throw new Error('Worker HTTP '+r.status);
-   const j=await r.json(); aiDraft=j.accounts||[];
-   $('aiOutput').value=JSON.stringify(aiDraft,null,2);
- }catch(e){$('aiOutput').value='❌ Gagal: '+e.message}
-}
-function applyAI(){
- if(!aiDraft.length){alert('Analisis AI belum menghasilkan data.');return}
- aiDraft.forEach(x=>data.accounts.push({
-   id:Date.now()+Math.random(),name:String(x.name||'').trim(),password:'',
-   money:x.money||'',income:x.income??'',incomeUnit:x.incomeUnit||'B/s',
-   speed:x.speed??'',speedUnit:x.speedUnit||'B',pets:x.pets??'',stolen:x.stolen??'',
-   note:x.note||'',status:x.status==='sold'?'sold':'ready',include:x.include!==false
- }));
- save();render();closeAI();alert(aiDraft.length+' akun ditambahkan.');aiDraft=[];
-}
-function setAIEndpoint(){
- const old=localStorage.getItem(AI_ENDPOINT_KEY)||'';
- const url=prompt('Masukkan URL Cloudflare Worker AI:',old);
- if(url!==null){localStorage.setItem(AI_ENDPOINT_KEY,url.trim());alert('URL AI tersimpan di browser ini.')}
-}
-
 </script>
 </body>
 </html>
