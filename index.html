@@ -35,11 +35,11 @@ h1{font-size:20px;margin:6px 0 0;letter-spacing:.1px}
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:13px}
 .card{background:linear-gradient(145deg,#0b0f16,#090c12);border:1px solid #151c26;border-radius:16px;padding:17px 18px;min-height:103px;box-shadow:0 10px 30px #0003}
 .card.accent{border-color:#173545}
-.card-label{font-size:9px;color:#4bdbba;letter-spacing:1px;font-weight:900}
+.card-label{font-size:11px;color:#4bdbba;letter-spacing:1px;font-weight:900}
 .card-label.cyan{color:#54e5ff}.card-label.purple{color:#bc83ff}.card-label.yellow{color:#ffd54c}
-.card-value{font-size:23px;font-weight:900;margin-top:10px;letter-spacing:.2px}
+.card-value{font-size:28px;font-weight:900;margin-top:10px;letter-spacing:.2px}
 .card-value.green{color:#12e5a1}.card-value.cyan{color:#5ee9ff}.card-value.purple{color:#bf7fff}.card-value.yellow{color:#ffd13d}
-.card-sub{font-size:8px;color:#566170;margin-top:5px;text-transform:uppercase;letter-spacing:.6px}
+.card-sub{font-size:10px;color:#566170;margin-top:5px;text-transform:uppercase;letter-spacing:.6px}
 .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0 14px}
 .filter{display:flex;border:1px solid #17212d;background:#090c12;border-radius:9px;overflow:hidden}
 .filter button{border:0;background:transparent;color:#647083;padding:8px 13px;font-size:9px;font-weight:900}
@@ -50,20 +50,20 @@ h1{font-size:20px;margin:6px 0 0;letter-spacing:.1px}
 .toggle input{accent-color:#0bc5eb}
 .table{background:#080b11;border:1px solid #151c26;border-radius:16px;overflow:hidden}
 .thead,.row{display:grid;grid-template-columns:minmax(160px,2fr) 1fr 1.15fr 1fr .8fr .7fr .7fr .55fr;align-items:center}
-.thead{padding:12px 13px;color:#566170;font-size:8px;text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid #141b24}
-.row{padding:13px;border-bottom:1px solid #111720;min-height:66px}
+.thead{padding:14px 13px;color:#566170;font-size:10px;text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid #141b24}
+.row{padding:15px 13px;border-bottom:1px solid #111720;min-height:66px}
 .row:last-child{border-bottom:0}
 .account{display:flex;align-items:center;gap:10px;min-width:0}
 .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#18374c,#08202a);border:1px solid #16435a;display:grid;place-items:center;font-size:14px}
-.name{font-size:10px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.name{font-size:14px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .masked{letter-spacing:2px}
-.meta{font-size:7px;color:#566170;margin-top:3px}
-.val{font-size:10px;font-weight:800}
+.meta{font-size:10px;color:#566170;margin-top:3px}
+.val{font-size:13px;font-weight:800}
 .money{color:#14e3a2}.income{color:#62e7ff}.speed{color:#be80ff}.pets{color:#11cdd0}.stolen{color:#ffd13d}
-.status{font-size:7px;font-weight:900;padding:4px 6px;border-radius:5px;display:inline-block;text-transform:uppercase}
+.status{font-size:10px;font-weight:900;padding:4px 6px;border-radius:5px;display:inline-block;text-transform:uppercase}
 .ready{color:#25e8a7;background:#09241c;border:1px solid #124b3b}
 .sold{color:#ff7893;background:#2b0d16;border:1px solid #57202f}
-.action{background:transparent;border:0;color:#687384;font-size:14px}
+.action{background:#090e15;border:1px solid #192631;border-radius:7px;width:32px;height:32px;border:0;color:#687384;font-size:14px}
 .bottom{display:flex;justify-content:center;align-items:center;gap:8px;color:#667181;font-size:9px;padding:16px}
 .bottom button{border:1px solid #17202b;background:#090d13;color:#8792a1;border-radius:8px;padding:7px 10px;font-size:9px}
 .modal-bg{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:18px;z-index:30}
@@ -86,6 +86,13 @@ h1{font-size:20px;margin:6px 0 0;letter-spacing:.1px}
 .rate-panel.hidden-rate .rate-content{display:none}
 .rate-head{display:flex;align-items:center;gap:8px;color:#7c8898;font-size:9px;font-weight:900}
 .rate-content{display:flex;align-items:center;gap:7px;margin-top:7px}
+
+.rate-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
+.rate-box{background:#070b10;border:1px solid #172633;border-radius:8px;padding:8px}
+.rate-box label{display:block;font-size:9px;color:#657285;font-weight:900;margin-bottom:5px}
+.rate-box input{width:100%;height:34px;background:#05080d;border:1px solid #1b2b38;border-radius:7px;color:#e9f7ff;padding:0 8px}
+.rate-note{font-size:9px;color:#596777;margin-top:8px}
+.hidden-rate .rate-grid,.hidden-rate .rate-note{display:none}
 .rate-content input{width:95px;height:31px;background:#06090e;border:1px solid #1b2b38;border-radius:7px;color:#eaf7ff;padding:0 8px}
 .small{font-size:8px;color:#596575}
 .empty{padding:30px;text-align:center;color:#5c6878;font-size:10px}
@@ -131,9 +138,9 @@ h1{font-size:20px;margin:6px 0 0;letter-spacing:.1px}
     <section class="cards">
       <div class="card"><div class="card-label">🟢 ACTIVE / READY ACCOUNTS</div><div id="readyCount" class="card-value">0</div><div id="readySub" class="card-sub">ready for sale</div></div>
       <div class="card"><div class="card-label cyan">💸 TOTAL MONEY</div><div id="moneyTotal" class="card-value green">$0</div><div class="card-sub">combined account balance</div></div>
-      <div class="card accent"><div class="card-label cyan">⚡ TOTAL ESTIMATED PRICE</div><div id="priceTotal" class="card-value cyan">Rp0</div><div id="priceFormula" class="card-sub">income + speed × rate</div></div>
-      <div class="card"><div class="card-label purple">🚀 TOTAL SPEED</div><div id="speedTotal" class="card-value purple">0</div><div class="card-sub">leading numbers only</div></div>
-      <div class="card"><div class="card-label cyan">📈 TOTAL INCOME / SEC</div><div id="incomeTotal" class="card-value cyan">0</div><div class="card-sub">leading numbers only</div></div>
+      <div class="card accent"><div class="card-label cyan">💰 ESTIMATED SELLING PRICE</div><div id="priceTotal" class="card-value cyan">Rp0</div><div id="priceFormula" class="card-sub">Income × rate + Speed × rate</div></div>
+      <div class="card"><div class="card-label purple">🚀 TOTAL SPEED</div><div id="speedTotal" class="card-value purple">0</div><div class="card-sub">angka depan saja</div></div>
+      <div class="card"><div class="card-label cyan">📈 TOTAL INCOME / SEC</div><div id="incomeTotal" class="card-value cyan">0</div><div class="card-sub">angka depan saja</div></div>
       <div class="card"><div class="card-label yellow">🛒 SOLD ACCOUNTS</div><div id="soldCount" class="card-value yellow">0</div><div class="card-sub">marked as sold</div></div>
     </section>
 
@@ -150,6 +157,7 @@ h1{font-size:20px;margin:6px 0 0;letter-spacing:.1px}
       </select>
       <label class="toggle"><input type="checkbox" id="hideNames" onchange="render()"> 🙈 Hide All Names</label>
       <label class="toggle"><input type="checkbox" id="hidePasswords" onchange="render()"> 🔒 Hide Passwords</label>
+      <label class="toggle"><input type="checkbox" id="onlyIncluded" onchange="render()"> ☑ Included Only</label>
       <input class="search" id="search" oninput="render()" placeholder="🔎 Search account...">
     </div>
 
@@ -164,16 +172,31 @@ h1{font-size:20px;margin:6px 0 0;letter-spacing:.1px}
 </div>
 
 <div class="rate-panel hidden-rate" id="ratePanel">
-  <div class="rate-head">🔐 SELLING RATE <button class="btn ghost" style="padding:4px 7px" onclick="toggleRate()">SHOW / HIDE</button></div>
-  <div class="rate-content">
-    <input id="rate" type="number" min="0" step="any" value="1000" oninput="saveAndRender()">
-    <span class="small">Rp per 1 point</span>
+  <div class="rate-head">🔐 SELLING RATES
+    <button class="btn ghost" style="padding:5px 8px;font-size:9px" onclick="toggleRate()">SHOW / HIDE</button>
   </div>
+  <div class="rate-grid">
+    <div class="rate-box"><label>⚡ RATE INCOME / SEC</label><input id="incomeRate" type="number" min="0" step="any" oninput="saveAndRender()"></div>
+    <div class="rate-box"><label>🚀 RATE SPEED</label><input id="speedRate" type="number" min="0" step="any" oninput="saveAndRender()"></div>
+  </div>
+  <div class="rate-note">Rate income dan speed terpisah. Sembunyikan panel sebelum screenshot marketplace.</div>
 </div>
+
+
+<div class="modal-bg" id="aiBg"><div class="modal">
+<h2>✨ AI IMPORT DATA</h2>
+<div class="notice">Paste data akun mentah di bawah. AI akan mencoba mengenali nama akun, money, income/sec, speed, pets, stolen/egg, status, dan satuan M/B. <b>Password tidak dikirim ke AI</b>; jika terdeteksi, password dipisahkan di browser dan kamu bisa mengisinya saat review.</div>
+<div class="field"><label>DATA MENTAH</label><textarea id="aiInput" style="width:100%;min-height:210px;resize:vertical;background:#070b11;border:1px solid #1b2834;border-radius:8px;color:#e7edf5;padding:12px;font:12px/1.5 Inter,Segoe UI,Arial" placeholder="Contoh:
+xilumatiy20 - 5,4 B money/s
+silumatiy50 - 6,2 B money/s
+xilumatiy15 - 8 B/s, speed 35b"></textarea></div>
+<div class="field" style="margin-top:12px"><label>HASIL AI / REVIEW</label><textarea id="aiOutput" readonly style="width:100%;min-height:170px;resize:vertical;background:#05080d;border:1px solid #1b2834;border-radius:8px;color:#bfefff;padding:12px;font:11px/1.5 ui-monospace,Consolas,monospace" placeholder="Hasil analisis akan muncul di sini..."></textarea></div>
+<div class="modal-actions"><button class="btn ghost" onclick="closeAI()">BATAL</button><button class="btn" onclick="analyzeAI()">🤖 ANALYZE</button><button class="btn primary" onclick="applyAI()">✓ ADD TO DASHBOARD</button></div>
+</div></div>
 
 <div class="modal-bg" id="modalBg">
   <div class="modal">
-    <h2>＋ Tambah Akun</h2>
+    <h2 id="modalTitle">＋ Tambah Akun</h2>
     <div class="notice">
       Semua angka income/speed boleh dikosongkan. Jika hanya income ATAU speed yang diisi, akun tetap bisa dihitung.
       Unit <b>M</b> dan <b>B</b> hanya label game; kalkulator mengambil <b>angka depannya saja</b>.
@@ -195,99 +218,134 @@ h1{font-size:20px;margin:6px 0 0;letter-spacing:.1px}
 </div>
 
 <script>
-const KEY='sae_seller_dashboard_v1';
-let data=JSON.parse(localStorage.getItem(KEY)||'null') || {accounts:[],rate:1000};
-let filter='all', page=1, pageSize=12;
-
+const KEY='sae_seller_dashboard_v2';
+let data=JSON.parse(localStorage.getItem(KEY)||'null')||{accounts:[],incomeRate:1000,speedRate:1000};
+if(data.rate!==undefined&&data.incomeRate===undefined){data.incomeRate=data.rate;data.speedRate=data.rate;delete data.rate}
+let filter='all',page=1,pageSize=12,editingId=null;
+const $=id=>document.getElementById(id);
 function save(){localStorage.setItem(KEY,JSON.stringify(data))}
 function num(v){const n=parseFloat(v);return Number.isFinite(n)?n:0}
-function money(v){return v===''?'—':v}
-function formatNum(v){return Number(v||0).toLocaleString('id-ID',{maximumFractionDigits:2})}
-function priceOf(a){return (num(a.income)+num(a.speed))*num(data.rate)}
-function toggleRate(){document.getElementById('ratePanel').classList.toggle('hidden-rate')}
-function toggleInput(id,btn){const x=document.getElementById(id);x.type=x.type==='password'?'text':'password';btn.textContent=x.type==='password'?'👁':'🙈'}
-function openModal(){document.getElementById('modalBg').classList.add('show');document.getElementById('fName').focus()}
-function closeModal(){document.getElementById('modalBg').classList.remove('show')}
-function addAccount(){
-  const name=document.getElementById('fName').value.trim();
-  if(!name){alert('Nama akun boleh diisi agar mudah dikenali.');return}
-  const a={
-    id:Date.now(),name,password:document.getElementById('fPass').value,
-    money:document.getElementById('fMoney').value.trim(),
-    income:document.getElementById('fIncome').value,
-    incomeUnit:document.getElementById('fIncomeUnit').value,
-    speed:document.getElementById('fSpeed').value,
-    speedUnit:document.getElementById('fSpeedUnit').value,
-    pets:document.getElementById('fPets').value,stolen:document.getElementById('fStolen').value,
-    note:document.getElementById('fNote').value.trim(),
-    status:document.getElementById('fStatus').value,
-    include:document.getElementById('fInclude').checked
-  };
-  data.accounts.push(a);save();closeModal();document.querySelectorAll('.modal input').forEach(x=>{if(x.type!=='checkbox')x.value=''});render();
+function fmt(v){return num(v).toLocaleString('id-ID',{maximumFractionDigits:2})}
+function rp(v){return num(v).toLocaleString('id-ID',{maximumFractionDigits:0})}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function priceOf(a){return num(a.income)*num(data.incomeRate)+num(a.speed)*num(data.speedRate)}
+function toggleRate(){$('ratePanel').classList.toggle('hidden-rate')}
+function toggleInput(id,b){const x=$(id);x.type=x.type==='password'?'text':'password';b.textContent=x.type==='password'?'👁':'🙈'}
+function openModal(){editingId=null;$('modalTitle').textContent='＋ Tambah Akun';clearForm();$('modalBg').classList.add('show');$('fName').focus()}
+function openEdit(id){
+ const a=data.accounts.find(x=>x.id===id);if(!a)return;
+ editingId=id;$('modalTitle').textContent='✏️ Edit Spesifikasi Akun';
+ $('fName').value=a.name;$('fPass').value=a.password||'';$('fMoney').value=a.money||'';
+ $('fStatus').value=a.status;$('fIncome').value=a.income;$('fIncomeUnit').value=a.incomeUnit||'B/s';
+ $('fSpeed').value=a.speed;$('fSpeedUnit').value=a.speedUnit||'B';$('fPets').value=a.pets||'';
+ $('fStolen').value=a.stolen||'';$('fNote').value=a.note||'';$('fInclude').checked=a.include!==false;
+ $('modalBg').classList.add('show')
+}
+function clearForm(){
+ ['fName','fPass','fMoney','fIncome','fSpeed','fPets','fStolen','fNote'].forEach(id=>$(id).value='');
+ $('fStatus').value='ready';$('fIncomeUnit').value='B/s';$('fSpeedUnit').value='B';$('fInclude').checked=true
+}
+function closeModal(){$('modalBg').classList.remove('show')}
+function saveAccount(){
+ const name=$('fName').value.trim();
+ if(!name){alert('Nama akun wajib diisi.');return}
+ const a={id:editingId||Date.now(),name,password:$('fPass').value,money:$('fMoney').value.trim(),
+ income:$('fIncome').value,incomeUnit:$('fIncomeUnit').value,speed:$('fSpeed').value,speedUnit:$('fSpeedUnit').value,
+ pets:$('fPets').value,stolen:$('fStolen').value,note:$('fNote').value.trim(),status:$('fStatus').value,include:$('fInclude').checked};
+ if(editingId){const i=data.accounts.findIndex(x=>x.id===editingId);data.accounts[i]=a}else data.accounts.push(a);
+ save();closeModal();render()
 }
 function delAccount(id){if(confirm('Hapus akun ini?')){data.accounts=data.accounts.filter(a=>a.id!==id);save();render()}}
 function toggleInclude(id){const a=data.accounts.find(x=>x.id===id);if(a){a.include=!a.include;save();render()}}
 function toggleStatus(id){const a=data.accounts.find(x=>x.id===id);if(a){a.status=a.status==='sold'?'ready':'sold';save();render()}}
 function setFilter(f,b){filter=f;page=1;document.querySelectorAll('.filter button').forEach(x=>x.classList.remove('active'));b.classList.add('active');render()}
 function changePage(d){page=Math.max(1,page+d);render()}
-function saveAndRender(){data.rate=num(document.getElementById('rate').value);save();render()}
-function filtered(){
-  let q=document.getElementById('search').value.toLowerCase().trim();
-  let arr=data.accounts.filter(a=>(filter==='all'||a.status===filter)&&(!q||a.name.toLowerCase().includes(q)));
-  const s=document.getElementById('sort').value;
-  if(s==='income')arr.sort((a,b)=>num(b.income)-num(a.income));
-  if(s==='speed')arr.sort((a,b)=>num(b.speed)-num(a.speed));
-  if(s==='price')arr.sort((a,b)=>priceOf(b)-priceOf(a));
-  if(s==='name')arr.sort((a,b)=>a.name.localeCompare(b.name));
-  return arr;
+function saveAndRender(){data.incomeRate=num($('incomeRate').value);data.speedRate=num($('speedRate').value);save();render()}
+function list(){
+ const q=$('search').value.toLowerCase().trim(),only=$('onlyIncluded')?.checked;
+ let a=data.accounts.filter(x=>(filter==='all'||x.status===filter)&&(!only||x.include)&&(!q||x.name.toLowerCase().includes(q)));
+ const s=$('sort').value;
+ if(s==='income')a.sort((x,y)=>num(y.income)-num(x.income));
+ if(s==='speed')a.sort((x,y)=>num(y.speed)-num(x.speed));
+ if(s==='price')a.sort((x,y)=>priceOf(y)-priceOf(x));
+ if(s==='name')a.sort((x,y)=>x.name.localeCompare(y.name));
+ return a
 }
+function parseMoney(v){const m=String(v||'').replace(/,/g,'.').match(/\d+(?:\.\d+)?/);return m?num(m[0]):0}
 function render(){
-  data.rate=num(document.getElementById('rate').value||data.rate);save();
-  const calc=data.accounts.filter(a=>a.include);
-  const income=calc.reduce((s,a)=>s+num(a.income),0);
-  const speed=calc.reduce((s,a)=>s+num(a.speed),0);
-  const totalPrice=(income+speed)*data.rate;
-  const ready=data.accounts.filter(a=>a.status==='ready').length,sold=data.accounts.filter(a=>a.status==='sold').length;
-  document.getElementById('readyCount').textContent=ready;
-  document.getElementById('readySub').textContent=`${data.accounts.length} total accounts`;
-  document.getElementById('soldCount').textContent=sold;
-  document.getElementById('moneyTotal').textContent='$'+data.accounts.reduce((s,a)=>s+parseMoneyNumber(a.money),0).toLocaleString('id-ID',{maximumFractionDigits:2});
-  document.getElementById('incomeTotal').textContent=formatNum(income)+' pts';
-  document.getElementById('speedTotal').textContent=formatNum(speed)+' pts';
-  document.getElementById('priceTotal').textContent='Rp'+formatRp(totalPrice);
-  document.getElementById('priceFormula').textContent=`(${formatNum(income)} + ${formatNum(speed)}) × Rp${formatRp(data.rate)}`;
-  const arr=filtered(), pages=Math.max(1,Math.ceil(arr.length/pageSize));if(page>pages)page=pages;
-  const slice=arr.slice((page-1)*pageSize,page*pageSize);
-  const hideNames=document.getElementById('hideNames').checked, hidePass=document.getElementById('hidePasswords').checked;
-  document.getElementById('rows').innerHTML=slice.length?slice.map(a=>{
-    const inc=a.income!==''?formatNum(num(a.income))+' '+a.incomeUnit:'—';
-    const sp=a.speed!==''?formatNum(num(a.speed))+' '+a.speedUnit:'—';
-    return `<div class="row">
-      <div class="cell"><div class="account"><div class="avatar">👤</div><div style="min-width:0"><div class="name ${hideNames?'masked':''}">${hideNames?'••••••••':esc(a.name)}</div><div class="meta">${hidePass?'🔒 password hidden':(a.password?'🔑 '+esc(a.password):'no password')} ${a.note?' · '+esc(a.note):''}</div></div></div></div>
-      <div class="cell val money">${money(esc(a.money))}</div>
-      <div class="cell val income">${inc}</div>
-      <div class="cell val speed">${sp}</div>
-      <div class="cell val pets">🐾 ${num(a.pets)}</div>
-      <div class="cell val stolen">🥚 ${num(a.stolen)}</div>
-      <div class="cell"><span class="status ${a.status}">${a.status==='sold'?'SOLD':'READY'}</span></div>
-      <div class="cell"><button class="action" title="${a.include?'Ikut hitung':'Tidak dihitung'}" onclick="toggleInclude(${a.id})">${a.include?'☑':'☐'}</button><button class="action" onclick="toggleStatus(${a.id})">↔</button><button class="action" onclick="delAccount(${a.id})">🗑</button></div>
-    </div>`;
-  }).join(''):`<div class="empty">Belum ada akun. Tekan ＋ ADD ACCOUNT untuk mulai.</div>`;
-  document.getElementById('pageInfo').textContent=`Page ${page} of ${pages}`;
+ $('incomeRate').value=data.incomeRate;$('speedRate').value=data.speedRate;
+ const calc=data.accounts.filter(a=>a.include),income=calc.reduce((s,a)=>s+num(a.income),0),speed=calc.reduce((s,a)=>s+num(a.speed),0);
+ const total=income*num(data.incomeRate)+speed*num(data.speedRate);
+ $('readyCount').textContent=data.accounts.filter(a=>a.status==='ready').length;
+ $('readySub').textContent=`${data.accounts.length} total accounts`;
+ $('soldCount').textContent=data.accounts.filter(a=>a.status==='sold').length;
+ $('moneyTotal').textContent='$'+data.accounts.reduce((s,a)=>s+parseMoney(a.money),0).toLocaleString('id-ID',{maximumFractionDigits:2});
+ $('incomeTotal').textContent=fmt(income)+' pts';$('speedTotal').textContent=fmt(speed)+' pts';
+ $('priceTotal').textContent='Rp'+rp(total);
+ $('priceFormula').textContent=`(${fmt(income)} × Rp${rp(data.incomeRate)}) + (${fmt(speed)} × Rp${rp(data.speedRate)})`;
+ const arr=list(),pages=Math.max(1,Math.ceil(arr.length/pageSize));if(page>pages)page=pages;
+ const slice=arr.slice((page-1)*pageSize,page*pageSize),hideN=$('hideNames').checked,hideP=$('hidePasswords').checked;
+ $('rows').innerHTML=slice.length?slice.map(a=>{
+  const inc=a.income!==''?`${fmt(a.income)} ${esc(a.incomeUnit||'B/s')}`:'—';
+  const sp=a.speed!==''?`${fmt(a.speed)} ${esc(a.speedUnit||'B')}`:'—';
+  return `<div class="row">
+  <div class="cell"><div class="account"><div class="avatar">👤</div><div style="min-width:0"><div class="name ${hideN?'masked':''}">${hideN?'••••••••':esc(a.name)}</div><div class="meta">${hideP?'🔒 Password hidden':(a.password?'🔑 '+esc(a.password):'No password')}${a.note?' · '+esc(a.note):''}</div></div></div></div>
+  <div class="cell val money">${a.money?esc(a.money):'—'}</div>
+  <div class="cell val income">${inc}</div><div class="cell val speed">${sp}</div>
+  <div class="cell val pets">🐾 ${num(a.pets)}</div><div class="cell val stolen">🥚 ${num(a.stolen)}</div>
+  <div class="cell"><span class="status ${a.status}">${a.status==='sold'?'SOLD':'READY'}</span></div>
+  <div class="cell row-actions"><input class="include" type="checkbox" title="Ikut perhitungan" ${a.include?'checked':''} onchange="toggleInclude(${a.id})">
+  <button class="action" title="Edit spesifikasi" onclick="openEdit(${a.id})">✏️</button><button class="action" title="Ready / Sold" onclick="toggleStatus(${a.id})">↔</button><button class="action" title="Hapus" onclick="delAccount(${a.id})">🗑</button></div></div>`
+ }).join(''):`<div class="empty">Belum ada akun yang sesuai. Tekan ＋ ADD ACCOUNT untuk menambahkan.</div>`;
+ $('pageInfo').textContent=`Page ${page} of ${pages}`
 }
-function parseMoneyNumber(v){
-  if(!v)return 0;
-  const m=String(v).replace(/,/g,'.').match(/[\d.]+/);return m?num(m[0]):0;
+function exportData(){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='sae-seller-dashboard-backup.json';a.click();URL.revokeObjectURL(a.href)}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!Array.isArray(x.accounts))throw 0;data=x;data.incomeRate=num(data.incomeRate||1000);data.speedRate=num(data.speedRate||1000);save();render();alert('Data berhasil diimport')}catch{alert('File backup tidak valid')}};r.readAsText(f);e.target.value=''}
+function clearAll(){if(confirm('Hapus semua akun dan reset dashboard?')){data={accounts:[],incomeRate:1000,speedRate:1000};save();render()}}
+$('incomeRate').value=data.incomeRate;$('speedRate').value=data.speedRate;render();
+
+let aiDraft=[];
+const AI_ENDPOINT_KEY='sae_ai_endpoint';
+function openAI(){ $('aiBg').classList.add('show'); $('aiOutput').value=''; aiDraft=[]; }
+function closeAI(){ $('aiBg').classList.remove('show'); }
+function extractJSON(s){
+  try{return JSON.parse(s)}catch{}
+  const m=s.match(/\[[\s\S]*\]/); if(m){try{return JSON.parse(m[0])}catch{}}
+  const o=s.match(/\{[\s\S]*\}/); if(o){try{return JSON.parse(o[0])}catch{}}
+  return null
 }
-function formatRp(v){return Number(v||0).toLocaleString('id-ID',{maximumFractionDigits:0})}
-function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function exportData(){
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='sae-seller-data.json';a.click();URL.revokeObjectURL(a.href);
+function scrubPasswords(raw){
+  return raw.split('\n').map(line=>line.replace(/(?:password|pass|pw)\s*[:=]\s*\S+/ig,'[PASSWORD REMOVED]')).join('\n')
 }
-function clearAll(){if(confirm('Hapus semua akun dan reset dashboard?')){data={accounts:[],rate:1000};save();render()}}
-document.getElementById('rate').value=data.rate;
-render();
+async function analyzeAI(){
+ const raw=$('aiInput').value.trim(); if(!raw){alert('Paste data terlebih dahulu.');return}
+ const endpoint=localStorage.getItem(AI_ENDPOINT_KEY)||'';
+ if(!endpoint){alert('AI belum terhubung. Setelah Worker dibuat, masukkan URL Worker di menu AI Settings.');return}
+ $('aiOutput').value='⏳ AI sedang membaca data...';
+ try{
+   const safe=scrubPasswords(raw);
+   const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:safe})});
+   if(!r.ok)throw new Error('Worker HTTP '+r.status);
+   const j=await r.json(); aiDraft=j.accounts||[];
+   $('aiOutput').value=JSON.stringify(aiDraft,null,2);
+ }catch(e){$('aiOutput').value='❌ Gagal: '+e.message}
+}
+function applyAI(){
+ if(!aiDraft.length){alert('Analisis AI belum menghasilkan data.');return}
+ aiDraft.forEach(x=>data.accounts.push({
+   id:Date.now()+Math.random(),name:String(x.name||'').trim(),password:'',
+   money:x.money||'',income:x.income??'',incomeUnit:x.incomeUnit||'B/s',
+   speed:x.speed??'',speedUnit:x.speedUnit||'B',pets:x.pets??'',stolen:x.stolen??'',
+   note:x.note||'',status:x.status==='sold'?'sold':'ready',include:x.include!==false
+ }));
+ save();render();closeAI();alert(aiDraft.length+' akun ditambahkan.');aiDraft=[];
+}
+function setAIEndpoint(){
+ const old=localStorage.getItem(AI_ENDPOINT_KEY)||'';
+ const url=prompt('Masukkan URL Cloudflare Worker AI:',old);
+ if(url!==null){localStorage.setItem(AI_ENDPOINT_KEY,url.trim());alert('URL AI tersimpan di browser ini.')}
+}
+
 </script>
 </body>
 </html>
